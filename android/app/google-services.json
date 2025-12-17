@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "411192770586",
+    "project_id": "celoe-lms-app",
+    "storage_bucket": "celoe-lms-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411192770586:android:3df954a8ca0ca474c591a3",
+        "android_client_info": {
+          "package_name": "com.example.celoe_lms_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4ph-7fyVGWw5hrC5XTpmZ1WkZ4a7kcbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

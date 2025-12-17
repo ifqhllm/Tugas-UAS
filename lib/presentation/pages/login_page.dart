@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../core/constants/colors.dart';
+import '../../core/providers/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,6 +10,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _obscureText = true;
+  bool _isLoading = false;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 40),
                   TextField(
+                    controller: _emailController,
                     decoration: InputDecoration(
                       labelText: "Email 365",
                       border: OutlineInputBorder(
@@ -86,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 20),
                   TextField(
+                    controller: _passwordController,
                     obscureText: _obscureText,
                     decoration: InputDecoration(
                       labelText: "Password",
@@ -131,16 +138,16 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/home');
-                      },
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      onPressed: _isLoading ? null : _login,
+                      child: _isLoading
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                              "Sign In with Google",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
                   ),
                   SizedBox(height: 20),
@@ -166,6 +173,27 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
+  }
+
+  void _login() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    String? errorMessage = await authProvider.signInWithGoogle();
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (errorMessage == null) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+    }
   }
 
   void _showHelpModal(BuildContext context) {
