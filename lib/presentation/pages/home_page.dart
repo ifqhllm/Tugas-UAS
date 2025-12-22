@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/colors.dart';
 import '../../core/providers/auth_provider.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -47,11 +48,21 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 10),
-                    CircleAvatar(
-                      backgroundImage: AssetImage(
-                        user?.profileImageUrl ?? 'lib/assets/logo tel.png',
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePage(),
+                          ),
+                        );
+                      },
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage(
+                          user?.profileImageUrl ?? 'lib/assets/logo tel.png',
+                        ),
+                        radius: 20,
                       ),
-                      radius: 20,
                     ),
                   ],
                 ),

@@ -8,10 +8,6 @@ class NotifikasiPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         title: Text('Notifikasi', style: TextStyle(color: Colors.black)),
         centerTitle: true,
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'kelas_saya_page.dart';
 import 'notifikasi_page.dart';
+import 'profile_page.dart';
 import '../widgets/bottom_nav_bar.dart';
 
 class MainScreen extends StatefulWidget {
@@ -12,7 +13,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [HomePage(), KelasSayaPage(), NotifikasiPage()];
+  final List<Widget> _pages = [
+    HomePage(),
+    KelasSayaPage(),
+    NotifikasiPage(),
+    ProfilePage(),
+  ];
 
   void _onTabTapped(int index) {
     setState(() {

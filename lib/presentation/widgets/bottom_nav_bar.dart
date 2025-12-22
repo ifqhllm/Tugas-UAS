@@ -24,6 +24,7 @@ class BottomNavBar extends StatelessWidget {
           _buildNavItem(Icons.home, 'Home', 0),
           _buildNavItem(Icons.school, 'Kelas Saya', 1),
           _buildNavItem(Icons.notifications, 'Notifikasi', 2),
+          _buildNavItem(Icons.person, 'Profile', 3),
         ],
       ),
     );

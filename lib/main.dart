@@ -18,7 +18,7 @@ void main() async {
       storageBucket: 'celoe-lms-app.firebasestorage.app',
       messagingSenderId: '411192770586',
       appId:
-          '1:411192770586:web:abcdef123456', // Replace with your web app ID from Firebase Console
+          '1:411192770586:web:abcdef123456', 
     ),
   );
   runApp(MyApp());
