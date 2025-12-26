@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 200,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('lib/assets/logo gedung.jpg'),
+                image: AssetImage('assets/logo gedung.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
                   right: 0,
                   child: Center(
                     child: Image.asset(
-                      'lib/assets/logo tel.png',
+                      'assets/logo tel.png',
                       height: 80,
                       fit: BoxFit.contain,
                     ),

@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('lib/assets/logo tel.png', height: 100),
+            Image.asset('assets/logo tel.png', height: 100),
             SizedBox(height: 20),
             Text(
               'CeLoe LMS',

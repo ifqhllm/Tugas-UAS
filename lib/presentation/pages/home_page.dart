@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../../core/constants/colors.dart';
 import '../../core/providers/auth_provider.dart';
 import 'profile_page.dart';
+import 'pengumuman_page.dart';
+import 'detail_pengumuman_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -59,7 +61,7 @@ class HomePage extends StatelessWidget {
                       },
                       child: CircleAvatar(
                         backgroundImage: AssetImage(
-                          user?.profileImageUrl ?? 'lib/assets/logo tel.png',
+                          user?.profileImageUrl ?? 'assets/logo tel.png',
                         ),
                         radius: 20,
                       ),
@@ -122,7 +124,14 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PengumumanPage(),
+                            ),
+                          );
+                        },
                         child: Text(
                           'Lihat Semua',
                           style: TextStyle(color: Colors.blue),
@@ -130,27 +139,37 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'lib/assets/lms.png',
-                          width: 50,
-                          height: 50,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPengumumanPage(),
                         ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Text(
-                            'Maintenance LMS',
-                            style: TextStyle(fontSize: 16),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/lms.png',
+                            width: 50,
+                            height: 50,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              'Maintenance LMS',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
