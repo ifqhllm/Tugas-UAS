@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/colors.dart';
+import 'detail_mata_kuliah_page.dart';
 
 class KelasSayaPage extends StatelessWidget {
   final List<Map<String, dynamic>> courses = [
@@ -53,63 +54,73 @@ class KelasSayaPage extends StatelessWidget {
         itemCount: courses.length,
         itemBuilder: (context, index) {
           final course = courses[index];
-          return Container(
-            margin: EdgeInsets.only(bottom: 20),
-            padding: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    course['image'],
-                    width: 80,
-                    height: 60,
-                    fit: BoxFit.cover,
+          return Material(
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailMataKuliahPage(course: course),
                   ),
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.only(bottom: 20),
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                SizedBox(width: 15),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        course['yearSemester'],
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        course['image'],
+                        width: 80,
+                        height: 60,
+                        fit: BoxFit.cover,
                       ),
-                      Text(
-                        course['subject'],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(course['code'], style: TextStyle(fontSize: 12)),
-                      SizedBox(height: 10),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: LinearProgressIndicator(
-                          value: course['progress'] / 100,
-                          backgroundColor: Colors.grey[300],
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.primaryRed,
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            course['yearSemester'],
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
                           ),
-                        ),
+                          Text(
+                            course['subject'].toUpperCase(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(course['code'], style: TextStyle(fontSize: 12)),
+                          SizedBox(height: 10),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: LinearProgressIndicator(
+                              value: course['progress'] / 100,
+                              backgroundColor: Colors.grey[300],
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.primaryRed,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            '${course['progress']} % Selesai',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 5),
-                      Text(
-                        '${course['progress']} % Selesai',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         },

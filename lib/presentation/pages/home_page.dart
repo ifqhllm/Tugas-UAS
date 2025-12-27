@@ -7,6 +7,58 @@ import 'pengumuman_page.dart';
 import 'detail_pengumuman_page.dart';
 
 class HomePage extends StatelessWidget {
+  final List<Map<String, dynamic>> courses = [
+    {
+      'image': 'assets/1.png',
+      'yearSemester': '2021/2',
+      'subject': 'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
+      'code': 'DP01',
+      'progress': 89,
+    },
+    {
+      'image': 'assets/2.jpg',
+      'yearSemester': '2021/2',
+      'subject': 'KEWARGANEGARAAN',
+      'code': 'KW02',
+      'progress': 75,
+    },
+    {
+      'image': 'assets/3.jpg',
+      'yearSemester': '2021/2',
+      'subject': 'SISTEM OPERASI',
+      'code': 'SO03',
+      'progress': 60,
+    },
+    {
+      'image': 'assets/4.jpg',
+      'yearSemester': '2021/2',
+      'subject': 'PEMROGRAMAN PERANGKAT BERGERAK MULTIMEDIA',
+      'code': 'PM04',
+      'progress': 45,
+    },
+    {
+      'image': 'assets/5.jpg',
+      'yearSemester': '2021/2',
+      'subject': 'BAHASA INGGRIS:BUSSINES AND SCIENTIFIC',
+      'code': 'BI01',
+      'progress': 75,
+    },
+    {
+      'image': 'assets/6.jpg',
+      'yearSemester': '2021/2',
+      'subject': 'PEMROGRAMAN MULTIMEDIA INTERAKTIF',
+      'code': 'PM02',
+      'progress': 60,
+    },
+    {
+      'image': 'assets/7.jpg',
+      'yearSemester': '2021/2',
+      'subject': 'OLAH RAGA',
+      'code': 'OR03',
+      'progress': 45,
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
@@ -156,11 +208,7 @@ class HomePage extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          Image.asset(
-                            'assets/lms.png',
-                            width: 50,
-                            height: 50,
-                          ),
+                          Image.asset('assets/lms.png', width: 50, height: 50),
                           SizedBox(width: 10),
                           Expanded(
                             child: Text(
@@ -179,12 +227,10 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
-                  Row(
-                    children: [
-                      _buildProgressItem('UI/UX', 85),
-                      SizedBox(width: 20),
-                      _buildProgressItem('Mobile Dev', 70),
-                    ],
+                  Column(
+                    children: courses
+                        .map((course) => _buildCourseCard(course))
+                        .toList(),
                   ),
                 ],
               ),
@@ -195,19 +241,61 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressItem(String subject, int progress) {
-    return Expanded(
-      child: Column(
+  Widget _buildCourseCard(Map<String, dynamic> course) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
         children: [
-          Text(subject, style: TextStyle(fontSize: 14)),
-          SizedBox(height: 5),
-          LinearProgressIndicator(
-            value: progress / 100,
-            backgroundColor: Colors.grey[300],
-            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryRed),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              course['image'],
+              width: 80,
+              height: 80,
+              fit: BoxFit.cover,
+            ),
           ),
-          SizedBox(height: 5),
-          Text('$progress%', style: TextStyle(fontSize: 12)),
+          SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  course['yearSemester'],
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+                Text(
+                  course['subject'].toUpperCase(),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                Text(course['code'], style: TextStyle(fontSize: 12)),
+                SizedBox(height: 10),
+                Container(
+                  height: 8,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: course['progress'] / 100,
+                      backgroundColor: Colors.grey[300],
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppColors.primaryRed,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  '${course['progress']} % Selesai',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
