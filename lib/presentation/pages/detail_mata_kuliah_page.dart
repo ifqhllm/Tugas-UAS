@@ -136,7 +136,14 @@ class DetailMataKuliahPage extends StatelessWidget {
                     },
                   ),
                   // Tugas Dan Kuis Tab
-                  Center(child: Text('Tugas Dan Kuis Content')),
+                  ListView.builder(
+                    padding: EdgeInsets.all(20),
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      final task = tasks[index];
+                      return _buildTaskCard(task);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -224,6 +231,50 @@ class DetailMataKuliahPage extends StatelessWidget {
             child: Icon(statusIcon, color: iconColor, size: 24),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTaskCard(Map<String, dynamic> task) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    task['meeting'],
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                ),
+                Icon(Icons.access_time, color: Colors.grey),
+              ],
+            ),
+            SizedBox(height: 10),
+            Center(
+              child: Text(
+                task['title'],
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              task['footer'],
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -5,6 +5,8 @@ import '../../core/providers/auth_provider.dart';
 import 'profile_page.dart';
 import 'pengumuman_page.dart';
 import 'detail_pengumuman_page.dart';
+import 'detail_mata_kuliah_page.dart';
+import 'detail_tugas_page.dart';
 
 class HomePage extends StatelessWidget {
   final List<Map<String, dynamic>> courses = [
@@ -112,10 +114,16 @@ class HomePage extends StatelessWidget {
                         );
                       },
                       child: CircleAvatar(
-                        backgroundImage: AssetImage(
-                          user?.profileImageUrl ?? 'assets/logo tel.png',
-                        ),
-                        radius: 20,
+                        radius: 18,
+                        backgroundImage: user?.profileImageUrl != null
+                            ? AssetImage(user!.profileImageUrl)
+                            : null,
+                        backgroundColor: user?.profileImageUrl == null
+                            ? Color(0xFFB71C1C)
+                            : null,
+                        child: user?.profileImageUrl == null
+                            ? Icon(Icons.person, color: Colors.white, size: 20)
+                            : null,
                       ),
                     ),
                   ],
@@ -125,112 +133,183 @@ class HomePage extends StatelessWidget {
           ),
           Expanded(
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Card Tugas Utama
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryRed,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+                  // Tugas Section
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Tugas Yang Akan Datang',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
                         ),
                         SizedBox(height: 10),
-                        Text(
-                          'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                        Text(
-                          'Nama Tugas: Prototype Aplikasi Mobile',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                        Text(
-                          'Waktu Pengumpulan: 15 Desember 2023, 23:59',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailTugasPage(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFB04B4B),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  'Nama Tugas: Prototype Aplikasi Mobile',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  'Waktu Pengumpulan: 15 Desember 2023, 23:59',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: 20),
                   // Section Pengumuman
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Pengumuman Terakhir',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PengumumanPage(),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Lihat Semua',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailPengumumanPage(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset('assets/lms.png', width: 50, height: 50),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              'Maintenance LMS',
-                              style: TextStyle(fontSize: 16),
-                            ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Pengumuman Terakhir',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PengumumanPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Lihat Semua',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailPengumumanPage(),
+                          ),
+                        );
+                      },
+                      child: Card(
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Text(
+                                'Maintenance Pra Uas Semester Genap 2020/2021',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.vertical(
+                                bottom: Radius.circular(16),
+                              ),
+                              child: Image.asset(
+                                'assets/lms.png',
+                                width: double.infinity,
+                                height: 200,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(height: 20),
                   // Progres Kelas
-                  Text(
-                    'Progres Kelas',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 10),
-                  Column(
-                    children: courses
-                        .map((course) => _buildCourseCard(course))
-                        .toList(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Progres Kelas',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Column(
+                          children: courses.map((course) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailMataKuliahPage(course: course),
+                                  ),
+                                );
+                              },
+                              child: _buildCourseCard(course),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
