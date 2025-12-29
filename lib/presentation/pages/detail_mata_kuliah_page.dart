@@ -3,11 +3,82 @@ import 'package:provider/provider.dart';
 import '../../core/constants/colors.dart';
 import '../../core/providers/auth_provider.dart';
 import '../widgets/bottom_nav_bar.dart';
+import 'detail_tugas_page.dart';
 
 class DetailMataKuliahPage extends StatelessWidget {
   final Map<String, dynamic> course;
 
   DetailMataKuliahPage({required this.course});
+
+  final String title1 = 'Pengantar User Interface Design';
+  final String desc1 =
+      'Materi pengantar ini akan membahas dasar-dasar User Interface Design, termasuk prinsip-prinsip desain yang baik, elemen-elemen UI, dan bagaimana menciptakan pengalaman pengguna yang intuitif. Peserta akan belajar tentang hierarki visual, konsistensi, dan feedback dalam desain antarmuka.';
+  final List<Map<String, dynamic>> materials1 = [
+    {'title': 'Zoom Meeting Syncronous', 'icon': Icons.link, 'available': true},
+    {
+      'title': 'Pengantar User Interface Design',
+      'icon': Icons.description,
+      'available': true,
+    },
+    {
+      'title': 'Empat Teori Dasar Antarmuka Pengguna',
+      'icon': Icons.picture_as_pdf,
+      'available': true,
+    },
+    {
+      'title': 'User Interface Design for Beginner',
+      'icon': Icons.video_library,
+      'available': true,
+    },
+    {'title': '20 Prinsip Desain', 'icon': Icons.image, 'available': true},
+    {
+      'title': 'Best Practice UI Design',
+      'icon': Icons.article,
+      'available': true,
+    },
+  ];
+
+  final String title2 = 'Konsep User Interface Design';
+  final String desc2 =
+      'Materi ini membahas konsep-konsep dasar dalam User Interface Design, termasuk elemen-elemen antarmuka, panduan desain, dan prinsip-prinsip yang harus diperhatikan untuk menciptakan pengalaman pengguna yang optimal.';
+  final List<Map<String, dynamic>> materials2 = [
+    {'title': 'Zoom Meeting Syncronous', 'icon': Icons.link, 'available': true},
+    {
+      'title': 'Elemen-elemen Antarmuka Pengguna',
+      'icon': Icons.description,
+      'available': true,
+    },
+    {
+      'title': 'UID Guidelines and Principles',
+      'icon': Icons.picture_as_pdf,
+      'available': true,
+    },
+    {'title': 'User Profile', 'icon': Icons.image, 'available': true},
+    {
+      'title': 'Principles of User Interface Design URL',
+      'icon': Icons.link,
+      'available': true,
+    },
+  ];
+
+  final List<Map<String, dynamic>> tasks2 = [
+    {
+      'type': 'quiz',
+      'title': 'Quiz Review 01',
+      'icon': Icons.quiz,
+      'description':
+          'Silahkan kerjakan kuis ini dalam waktu 15 menit sebagai nilai pertama komponen kuis. Jangan lupa klik tombol Submit Answer setelah menjawab seluruh pertanyaan. Kerjakan sebelum hari Jumat, 26 Februari 2021 jam 23:59 WIB.',
+      'available': true,
+    },
+    {
+      'type': 'assignment',
+      'title': 'Tugas 01 - UID Android Mobile Game',
+      'icon': Icons.description,
+      'description':
+          '1. Buatlah desain tampilan (antarmuka) pada aplikasi mobile game FPS (First Person Shooter) yang akan menjadi tugas pada mata kuliah Pemrograman Aplikasi Permainan. 2. Desain yang dibuat harus meliputi seluruh tampilan pada aplikasi/game, dari pertama kali aplikasi dibuka.',
+      'available': false,
+    },
+  ];
 
   final List<Map<String, dynamic>> meetings = [
     {
@@ -18,9 +89,9 @@ class DetailMataKuliahPage extends StatelessWidget {
     },
     {
       'meeting': 'Pertemuan 2',
-      'title': '02 - Prinsip Desain UI',
+      'title': '02 - Konsep User Interface Design',
       'status': 'completed',
-      'footer': '2 URLs, 1 File, 4 Interactive Content',
+      'footer': '2 URLs, 1 File, 4 Tugas',
     },
     {
       'meeting': 'Pertemuan 3',
@@ -159,15 +230,21 @@ class DetailMataKuliahPage extends StatelessWidget {
     );
   }
 
-  void _showMateriDetailBottomSheet(BuildContext context) {
+  void _showMateriDetailBottomSheet(
+    BuildContext context,
+    String title,
+    String description,
+    List<Map<String, dynamic>> materials,
+    List<Map<String, dynamic>> tasks,
+  ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => DraggableScrollableSheet(
-        initialChildSize: 0.55,
+        initialChildSize: 0.7,
         minChildSize: 0.25,
-        maxChildSize: 0.75,
+        maxChildSize: 0.85,
         builder: (context, scrollController) => DefaultTabController(
           length: 2,
           child: Container(
@@ -194,7 +271,7 @@ class DetailMataKuliahPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: Text(
-                    'Pengantar User Interface Design',
+                    title,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                     textAlign: TextAlign.center,
                   ),
@@ -215,7 +292,7 @@ class DetailMataKuliahPage extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Materi pengantar ini akan membahas dasar-dasar User Interface Design, termasuk prinsip-prinsip desain yang baik, elemen-elemen UI, dan bagaimana menciptakan pengalaman pengguna yang intuitif. Peserta akan belajar tentang hierarki visual, konsistensi, dan feedback dalam desain antarmuka.',
+                        description,
                         style: TextStyle(color: Colors.grey[700], height: 1.5),
                       ),
                     ],
@@ -239,64 +316,45 @@ class DetailMataKuliahPage extends StatelessWidget {
                       ListView(
                         controller: scrollController,
                         padding: EdgeInsets.all(16),
-                        children: [
-                          _buildMateriItem(
-                            'Zoom Meeting Syncronous',
-                            Icons.link,
-                            true,
-                          ),
-                          _buildMateriItem(
-                            'Pengantar User Interface Design',
-                            Icons.description,
-                            true,
-                          ),
-                          _buildMateriItem(
-                            'Empat Teori Dasar Antarmuka Pengguna',
-                            Icons.picture_as_pdf,
-                            true,
-                          ),
-                          _buildMateriItem(
-                            'User Interface Design for Beginner',
-                            Icons.video_library,
-                            true,
-                          ),
-                          _buildMateriItem(
-                            '20 Prinsip Desain',
-                            Icons.image,
-                            true,
-                          ),
-                          _buildMateriItem(
-                            'Best Practice UI Design',
-                            Icons.article,
-                            true,
-                          ),
-                        ],
+                        children: materials
+                            .map((item) => _buildMateriItem(item))
+                            .toList(),
                       ),
                       // Tugas dan Kuis
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 24),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/free.png',
-                              width: 200,
-                              fit: BoxFit.contain,
-                            ),
-                            SizedBox(height: 16),
-                            Text(
-                              'Tidak Ada Tugas Dan Kuis Hari Ini',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                                color: Colors.grey[700],
+                      tasks.isEmpty
+                          ? Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 24),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/free.png',
+                                    width: 200,
+                                    fit: BoxFit.contain,
+                                  ),
+                                  SizedBox(height: 16),
+                                  Text(
+                                    'Tidak Ada Tugas Dan Kuis Hari Ini',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                      color: Colors.grey[700],
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
                               ),
-                              textAlign: TextAlign.center,
+                            )
+                          : ListView(
+                              controller: scrollController,
+                              padding: EdgeInsets.all(16),
+                              children: tasks
+                                  .map(
+                                    (item) => _buildTaskQuizItem(context, item),
+                                  )
+                                  .toList(),
                             ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -308,7 +366,7 @@ class DetailMataKuliahPage extends StatelessWidget {
     );
   }
 
-  Widget _buildMateriItem(String title, IconData icon, bool available) {
+  Widget _buildMateriItem(Map<String, dynamic> item) {
     return Container(
       margin: EdgeInsets.only(bottom: 12),
       padding: EdgeInsets.all(16),
@@ -325,18 +383,72 @@ class DetailMataKuliahPage extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: Colors.blue),
+          Icon(item['icon'], color: Colors.blue),
           SizedBox(width: 12),
           Expanded(
-            child: Text(title, style: TextStyle(fontWeight: FontWeight.w500)),
+            child: Text(
+              item['title'],
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
           ),
           Icon(
-            available ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: available ? Colors.green : Colors.grey,
+            item['available']
+                ? Icons.check_circle
+                : Icons.radio_button_unchecked,
+            color: item['available'] ? Colors.green : Colors.grey,
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildTaskQuizItem(BuildContext context, Map<String, dynamic> item) {
+    Widget card = Card(
+      margin: EdgeInsets.only(bottom: 12),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Icon(item['icon'], color: Colors.blue),
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item['title'],
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    item['description'],
+                    style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              item['available']
+                  ? Icons.check_circle
+                  : Icons.radio_button_unchecked,
+              color: item['available'] ? Colors.green : Colors.grey,
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (item['type'] == 'assignment') {
+      return GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DetailTugasPage()),
+        ),
+        child: card,
+      );
+    }
+    return card;
   }
 
   Widget _buildMeetingCard(BuildContext context, Map<String, dynamic> meeting) {
@@ -354,9 +466,25 @@ class DetailMataKuliahPage extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: meeting['meeting'] == 'Pertemuan 1'
-          ? () => _showMateriDetailBottomSheet(context)
-          : null,
+      onTap: () {
+        String title, desc;
+        List<Map<String, dynamic>> mats;
+        List<Map<String, dynamic>> tsks = [];
+        if (meeting['meeting'] == 'Pertemuan 1') {
+          title = title1;
+          desc = desc1;
+          mats = materials1;
+          tsks = [];
+        } else if (meeting['meeting'] == 'Pertemuan 2') {
+          title = title2;
+          desc = desc2;
+          mats = materials2;
+          tsks = tasks2;
+        } else {
+          return;
+        }
+        _showMateriDetailBottomSheet(context, title, desc, mats, tsks);
+      },
       child: Container(
         margin: EdgeInsets.only(bottom: 15),
         padding: EdgeInsets.all(15),
