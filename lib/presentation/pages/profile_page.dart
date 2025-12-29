@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/colors.dart';
 import '../../core/providers/auth_provider.dart';
@@ -14,6 +15,11 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   String selectedTab = 'About Me';
+  List<Map<String, String>> classes = [
+    {'title': 'UI/UX Design', 'code': 'IF-101', 'date': '2023-12-01'},
+    {'title': 'Mobile Development', 'code': 'IF-102', 'date': '2023-12-05'},
+    {'title': 'Database Systems', 'code': 'IF-103', 'date': '2023-12-10'},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -236,77 +242,60 @@ class _ProfilePageState extends State<ProfilePage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 10),
-        Container(
-          height: 120,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: ListView.separated(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: 3,
+            itemCount: classes.length,
+            separatorBuilder: (context, index) => SizedBox(height: 8),
             itemBuilder: (context, index) {
-              List<Map<String, String>> classes = [
-                {
-                  'title': 'UI/UX Design',
-                  'code': 'IF-101',
-                  'date': '2023-12-01',
-                },
-                {
-                  'title': 'Mobile Development',
-                  'code': 'IF-102',
-                  'date': '2023-12-05',
-                },
-                {
-                  'title': 'Database Systems',
-                  'code': 'IF-103',
-                  'date': '2023-12-10',
-                },
-              ];
               var cls = classes[index];
-              return Row(
-                children: [
-                  _buildClassCard(cls['title']!, cls['code']!, cls['date']!),
-                  if (index < 2) SizedBox(width: 10),
-                ],
+              DateTime date = DateTime.parse(cls['date']!);
+              String formattedDate = DateFormat(
+                'EEEE, d MMMM yyyy',
+              ).format(date);
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 48,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: Colors.blue[200],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            cls['title']!.toUpperCase(),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            cls['code']!,
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Tanggal Mulai $formattedDate',
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildClassCard(String title, String code, String date) {
-    return Container(
-      width: 200,
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.blue[50],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.book, color: Colors.blue[300], size: 20),
-              SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 5),
-          Text(code, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
-          SizedBox(height: 5),
-          Text(
-            'Mulai: $date',
-            style: TextStyle(color: Colors.grey[600], fontSize: 12),
-          ),
-        ],
-      ),
     );
   }
 
