@@ -4,6 +4,8 @@ import '../../core/constants/colors.dart';
 import '../../core/providers/auth_provider.dart';
 import '../widgets/bottom_nav_bar.dart';
 import 'detail_tugas_page.dart';
+import 'materi_viewer_page.dart';
+import 'video_player_page.dart';
 
 class DetailMataKuliahPage extends StatelessWidget {
   final Map<String, dynamic> course;
@@ -317,7 +319,7 @@ class DetailMataKuliahPage extends StatelessWidget {
                         controller: scrollController,
                         padding: EdgeInsets.all(16),
                         children: materials
-                            .map((item) => _buildMateriItem(item))
+                            .map((item) => _buildMateriItem(context, item))
                             .toList(),
                       ),
                       // Tugas dan Kuis
@@ -366,38 +368,51 @@ class DetailMataKuliahPage extends StatelessWidget {
     );
   }
 
-  Widget _buildMateriItem(Map<String, dynamic> item) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 12),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 5,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Icon(item['icon'], color: Colors.blue),
-          SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              item['title'],
-              style: TextStyle(fontWeight: FontWeight.w500),
+  Widget _buildMateriItem(BuildContext context, Map<String, dynamic> item) {
+    return GestureDetector(
+      onTap: item['title'] == 'Pengantar User Interface Design'
+          ? () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MateriViewerPage()),
+            )
+          : item['title'] == 'User Interface Design for Beginner'
+          ? () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => VideoPlayerPage()),
+            )
+          : null,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 12),
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              blurRadius: 5,
+              offset: Offset(0, 2),
             ),
-          ),
-          Icon(
-            item['available']
-                ? Icons.check_circle
-                : Icons.radio_button_unchecked,
-            color: item['available'] ? Colors.green : Colors.grey,
-          ),
-        ],
+          ],
+        ),
+        child: Row(
+          children: [
+            Icon(item['icon'], color: Colors.blue),
+            SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                item['title'],
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+            Icon(
+              item['available']
+                  ? Icons.check_circle
+                  : Icons.radio_button_unchecked,
+              color: item['available'] ? Colors.green : Colors.grey,
+            ),
+          ],
+        ),
       ),
     );
   }
