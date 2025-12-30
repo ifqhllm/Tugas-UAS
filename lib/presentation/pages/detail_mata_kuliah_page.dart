@@ -6,6 +6,7 @@ import '../widgets/bottom_nav_bar.dart';
 import 'detail_tugas_page.dart';
 import 'materi_viewer_page.dart';
 import 'video_player_page.dart';
+import 'quiz_review_page.dart';
 
 class DetailMataKuliahPage extends StatelessWidget {
   final Map<String, dynamic> course;
@@ -209,14 +210,58 @@ class DetailMataKuliahPage extends StatelessWidget {
                     },
                   ),
                   // Tugas Dan Kuis Tab
-                  ListView.builder(
-                    padding: EdgeInsets.all(20),
-                    itemCount: tasks.length,
-                    itemBuilder: (context, index) {
-                      final task = tasks[index];
-                      return _buildTaskCard(task);
-                    },
-                  ),
+                  tasks2.isEmpty
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/free.png',
+                                width: 200,
+                                fit: BoxFit.contain,
+                              ),
+                              SizedBox(height: 16),
+                              Text(
+                                'Tidak Ada Tugas Dan Kuis Hari Ini',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                  color: Colors.grey[700],
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Quiz - Assessments 2',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              Expanded(
+                                child: ListView(
+                                  children: tasks2
+                                      .map(
+                                        (item) =>
+                                            _buildTaskQuizItem(context, item),
+                                      )
+                                      .toList(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -462,6 +507,14 @@ class DetailMataKuliahPage extends StatelessWidget {
         ),
         child: card,
       );
+    } else if (item['type'] == 'quiz') {
+      return GestureDetector(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => QuizReviewPage()),
+        ),
+        child: card,
+      );
     }
     return card;
   }
@@ -556,50 +609,6 @@ class DetailMataKuliahPage extends StatelessWidget {
               top: 0,
               right: 0,
               child: Icon(statusIcon, color: iconColor, size: 24),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTaskCard(Map<String, dynamic> task) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    task['meeting'],
-                    style: TextStyle(color: Colors.white, fontSize: 10),
-                  ),
-                ),
-                Icon(Icons.access_time, color: Colors.grey),
-              ],
-            ),
-            SizedBox(height: 10),
-            Center(
-              child: Text(
-                task['title'],
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              task['footer'],
-              style: TextStyle(fontSize: 12, color: Colors.grey),
             ),
           ],
         ),
